@@ -1,0 +1,28 @@
+@font-face {
+    font-family: Kanit;
+    src: url('../font/Kanit/Kanit-Regular.ttf');
+}
+*{
+    font-family: Kanit;
+}
+.navbar .nav-item .active{
+    border-bottom: 5px orange solid;
+}
+.navbar .nav-item .nav-link{
+    padding: 10px 25px;
+}
+.navbar .nav-item .nav-link:hover{
+    border-bottom: 5px orange solid;
+}
+.navbar .nav-item .dropdown-item{
+    padding: 10px 5px;
+}
+.navbar .nav-item .dropdown-item:hover{
+    background-color: orange;
+}
+.list-group .list-group-item{
+    padding: 20px 10px;
+}
+.btn-auth{
+    padding: 0px 5px;
+}
