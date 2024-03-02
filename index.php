@@ -9,7 +9,7 @@
     <meta name="description" content="เว็ปไซต์ขายแคปหมู">
     <!-- Bootstrap CSS v5.2.1 -->
     <?php include('template/header.php')?>
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
