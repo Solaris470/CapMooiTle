@@ -67,12 +67,42 @@
         <div class="row">
             <div class="col-md-6 h-100">
                 <h2>รายการสินค้า</h2>
+                <div class="cart-items">
+                    <?php
+
+        // ดึงข้อมูลจาก Session
+        $cartData = isset($_SESSION['cart']) ? json_decode($_SESSION['cart'], true) : [];
+
+        if (!empty($cartData)) {
+            foreach ($cartData as $item) {
+                $productId = $item['productId'];
+                $quantity = $item['quantity'];
+
+                // ทำการ Query ข้อมูลสินค้าจากฐานข้อมูลโดยใช้ $productId
+                // คำสั่ง SQL และการ Query ข้อมูลจะขึ้นอยู่กับโครงสร้างฐานข้อมูลของคุณ
+                // คำสั่ง SQL เหล่านี้เป็นตัวอย่างเท่านั้น
+                $sql = "SELECT * FROM products WHERE product_id = $productId";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    // แสดงข้อมูลสินค้า
+                    echo '<div class="cart-item">';
+                    echo '<img src="' . $row['product_image'] . '" alt="' . $row['product_name'] . '" class="w-25 h-25">';
+                    echo '<p>' . $row['product_name'] . '</p>';
+                    echo '<p>จำนวน: ' . $quantity . '</p>';
+                    echo '<p>ราคาต่อชิ้น: ' . $row['product_price'] . ' บาท</p>';
+                    echo '<p>ราคารวม: ' . ($quantity * $row['product_price']) . ' บาท</p>';
+                    echo '</div>';
+                }
+            }
+        } else {
+            echo '<p>ไม่มีสินค้าในตะกร้า</p>';
+        }
+        ?>
+                </div>
             </div>
             <div class="col-md-6">
-                <div class="cart-items">
-                    <!-- แสดงรายการสินค้าที่ลูกค้าเลือก -->
-                    <!-- นำเสนอข้อมูลเช่น ชื่อสินค้า, ราคา, จำนวน, ราคารวม และปุ่มลบสินค้า -->
-                </div>
                 <form action="process_order.php" method="post">
                     <h3>ที่อยู่ในการจัดส่ง</h3>
                     <div class="row mb-3">
@@ -105,13 +135,16 @@
                     </div>
                     <div class="mb-3">
                         <div class="mb-3">
-                            <textarea class="form-control" name="" id="" rows="3" placeholder="บ้านเลขที่, ซอย,หมู่ ,ถนน ,ตำบล/แขวง"></textarea>
+                            <textarea class="form-control" name="" id="" rows="3"
+                                placeholder="บ้านเลขที่, ซอย,หมู่ ,ถนน ,ตำบล/แขวง"></textarea>
                         </div>
-                        
+
                     </div>
                     <!-- ปุ่มยืนยันคำสั่งซื้อ -->
                     <button type="submit" class="btn btn-primary">ยืนยันคำสั่งซื้อ</button>
+
                 </form>
+                <button onclick="clearsesstion()">sesstion clear</button>
             </div>
         </div>
 
@@ -129,10 +162,13 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         // ดึงข้อมูลจังหวัดเมื่อหน้าเว็บโหลด
         getProvinces();
+        getDataFromDatabase();
 
         // เมื่อเปลี่ยนแปลงจังหวัด
         document.getElementById("province").addEventListener("change", function() {
@@ -199,6 +235,38 @@
                     subDistrictSelect.appendChild(option);
                 });
             });
+    }
+
+    function getDataFromDatabase() {
+    // ดึงค่า productId จาก sessionStorage
+    var productId = sessionStorage.getItem('productId');
+
+    // สร้าง XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // กำหนด callback function ที่จะทำงานเมื่อข้อมูลถูกโหลด
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // แปลงข้อมูล JSON ที่ได้มาเป็น object
+            var data = JSON.parse(xhr.responseText);
+
+            // ทำอะไรกับข้อมูลที่ได้ เช่น แสดงผลใน console
+            console.log(data);
+
+            // นำข้อมูลไปใช้ต่อตามต้องการ
+            // เช่นแสดงข้อมูลใน HTML, ปรับแต่ง UI, ฯลฯ
+        }
+    };
+
+    // กำหนดว่าจะใช้ method GET และระบุ URL ของไฟล์ PHP
+    xhr.open("GET", "get_data.php?productId=" + productId, true);
+
+    // ส่ง request
+    xhr.send();
+}
+
+    function clearsesstion() {
+        sessionStorage.clear();
     }
     </script>
 </body>

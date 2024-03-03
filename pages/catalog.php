@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <title>รายการสินค้า</title>
     <!-- Required meta tags -->
@@ -63,18 +64,16 @@
             </div>
         </nav>
     </header>
-    <main class="p-5 contanier">
+    <main class="p-5 container">
         <div class="row">
-            <div class="col-md-3">
-                <!-- <aside class="col-md-3">
-                    <img src="../img/logo.png" alt="">
-                </aside> -->
+            <div class="col-md-2 ">
+
             </div>
-            <div class="col-md-6 bg-light">
-                <div class="row row-cols-1 row-cols-md-3">
+            <div class="col-md-10 bg-light">
+                <div class="row row-cols-1 row-cols-md-4">
                     <?php
         include("../condb.php");
-        $sql = "SELECT products.product_id,product_price,product_bestsell, products.product_name, COALESCE(AVG(reviews.rating), 0) AS average_rating
+        $sql = "SELECT products.product_id,product_price,product_bestsell, products.product_name, COALESCE(AVG(reviews.rating), 0) AS average_rating , product_image
         FROM products
         LEFT JOIN reviews ON products.product_id = reviews.product_id
         -- WHERE products.product_status = 1
@@ -84,34 +83,38 @@
             while($rows = $result->fetch_assoc()){
 
     ?>
-                    <div class="col mt-4">
-                        <div class="card h-100 position-relative">
-                            <?php if ($rows['product_bestsell'] == 1) {
+                    <a href="product_detail.php?id=<?=$rows['product_id']?>" style="text-decoration:none">
+                        <div class="col mt-4">
+                            <input type="hidden" name="id" value="<?=$rows['product_id']?>">
+                            <div class="card h-100 position-relative">
+                                <?php if ($rows['product_bestsell'] == 1) {
                                 echo    '<div class="best-seller-badge position-absolute bg-warning text-white px-2 py-1 mt-2">
                                             Best Seller
                                          </div>';
                             }?>
-                            <div class="pro-image">
-                                <img src="../img/catalog1.jpg" class="card-img-top" alt="<?=$rows['product_name']?>">
-                            </div>
-                            <div class="card-body">
-                                <div class="card-title"><?=$rows['product_name']?></div>
-                                <p class="card-text"><span style="color:orange">฿<?=$rows['product_price']?></span></p>
-                                <div class="pro-review d-flex justify-content-between">
-                                    <p class="card-text star">
-                                        <?php
+                                <div class="pro-image">
+                                    <img src="<?= $rows['product_image'];?>" alt="<?= $rows['product_name']?>" class="card-img-top">
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-title"><?=$rows['product_name']?></div>
+                                    <p class="card-text"><span style="color:orange">฿<?=$rows['product_price']?></span>
+                                    </p>
+                                    <div class="pro-review d-flex justify-content-between">
+                                        <p class="card-text star">
+                                            <?php
                                 // ปรับค่า review ในช่วง 1-5
                                 $review = $rows['average_rating'];
                                 for ($i = 1; $i <= 5; $i++) {
                                     echo ($i <= $review) ? '★' : '☆'; // ใช้ ★ แทนดาวที่เต็ม, ☆ แทนดาวที่ว่าง
                                 }
                                 ?>
-                                    </p>
-                                    <p class="card-text">ขายแล้ว 6 ชิ้น</p>
+                                        </p>
+                                        <p class="card-text">ขายแล้ว 6 ชิ้น</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     <?php
                         }
                     }else {
@@ -140,4 +143,5 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
 </body>
+
 </html>

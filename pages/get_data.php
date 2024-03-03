@@ -63,4 +63,34 @@ function getSubDistricts($district_id) {
 
     return $sub_districts;
 }
+
+function getDataFromDatabase($productId) {
+    $conn = connectToDatabase();
+
+    $productId = $conn->real_escape_string($productId);
+
+    $sql = "SELECT * FROM products WHERE product_id = '$productId'";
+    $result = $conn->query($sql);
+
+    $data = array();
+
+    if ($result->num_rows > 0) {
+        $data = $result->fetch_assoc();
+    }
+
+    $conn->close();
+
+    return $data;
+}
+
+// รับค่า productId จากพารามิเตอร์
+$productId = $_GET['productId'];
+
+// เรียกใช้ฟังก์ชั่นเพื่อดึงข้อมูล
+$data = getDataFromDatabase($productId);
+
+// แสดงผลลัพธ์เป็น JSON
+header('Content-Type: application/json');
+echo json_encode($data);
+
 ?>
