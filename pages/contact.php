@@ -12,7 +12,16 @@
     <link rel="stylesheet" href="../css/style.css">
     <!-- <link rel="stylesheet" href="css/style.css"> -->
 </head>
-
+<style>
+ .pf-20{
+    padding-left: 20px;
+ }
+    .lb{
+    list-style: none;
+    position: relative;
+    padding-left: 38px;
+ }
+</style>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-light">
@@ -64,7 +73,46 @@
         </nav>
     </header>
     <main>
-
+    <div class="container">
+        <div>
+            <h1>ที่อยู่ของวิทยาเขต</h1>
+        </div>
+        <div class="pf-20">
+            <p style="margin-left: 70px;">58 ถนนวิภาวดีรังสิต แขวงรัชดาภิเษก เขตดินแดง กรุงเทพมหานคร 10400<br>
+            สนใจรายละเอียดสามารถสอบถามได้ที่ 026922360-4<br>
+            02277-3660 , 02277-3661 , 02277-3694 , 02277-2985 แฟกซ์ 02277-3693</p>
+        </div>
+        <hr>
+        <div>
+            <h1>รถประจำทางที่ผ่านวิทยาเขต</h1>
+        </div>
+        <div class="pf-20">
+            <div class="row">
+                <div class="col-md-4">
+                    <ul>
+                        <li class="lb"><i class="bi bi-bus-front-fill"></i> รถประจำทางสาย 24</li>
+                        <li class="lb"><i class="bi bi-bus-front-fill"></i> รถประจำทางสาย 69</li>
+                        <li class="lb"><i class="bi bi-bus-front-fill"></i> รถประจำทางสาย 107</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul>
+                        <li class="lb"><i class="bi bi-bus-front-fill"></i> รถประจำทางสาย 129</li>
+                        <li class="lb"><i class="bi bi-bus-front-fill"></i> รถประจำทางสาย 138</li>
+                        <li class="lb"><i class="bi bi-bus-front-fill"></i> รถประจำทางสาย 187</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul>
+                        <li class="lb"><i class="bi bi-bus-front-fill"></i> รถประจำทางสาย 92</li>
+                        <li class="lb"><i class="bi bi-bus-front-fill"></i> รถประจำทางสาย 504</li>
+                        <li class="lb"><i class="bi bi-bus-front-fill"></i> รถประจำทางสาย 555</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
     </main>
     <footer class="container">
         <p class="float-end"><a href="#">Back to top</a></p>
