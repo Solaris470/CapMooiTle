@@ -66,8 +66,8 @@
                         </li>
                     </ul>
                     <div class="btn-auth">
-                        <a href="auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
-                        <a href="auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
+                        <a href="../auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
+                        <a href="../auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
                     </div>
                 </div>
             </div>
@@ -91,6 +91,7 @@
         $result = $conn->query($sql);
         if($result->num_rows > 0){
             while($rows = $result->fetch_assoc()){
+            $product_quantity = $rows['product_quantity'];
     ?>
         <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';margin: 10px;">
             <ol class="breadcrumb">
@@ -119,12 +120,12 @@
                 <p class="mt-3">Bundle Deals : <span>ซื้อ 4 ถุงราคาเพียง 20 บาท</span></p>
                 <div class="d-flex align-items-center mt-4 ">
                     <button id="decrementBtn" class="btn btn-outline-primary">-</button>
-                    <input id="quantityInput" type="text" class="form-control mx-2 w-25 text-center" value="1" readonly>
+                    <input id="quantityInput" name="p_quantityInput" type="text" class="form-control mx-2 w-25 text-center" value="1" readonly>
                     <button id="incrementBtn" class="btn btn-outline-primary">+</button>
-                    <p class="m-2"> สินค้าคงเหลือ <?= $rows['product_quantity']?> ชิ้น</p>
+                    <p class="m-2"> สินค้าคงเหลือ <?= $product_quantity ?> ชิ้น</p>
                 </div>
-
-                <button id="addToCartBtn" class="btn btn-success mt-3">เพิ่มสินค้าลงในตะกร้า</button>
+                <!-- <a href="#" id="addToCartBtn" class="btn btn-success mt-3">เพิ่มสินค้าลงในตะกร้า</a> -->
+                <button class="btn btn-success mt-3" onclick="sendOrderItem()">เพิ่มสินค้าลงในตะกร้า</button>
             </div>
         </div>
         <?php
@@ -147,13 +148,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const quantityInput = document.getElementById("quantityInput");
         const decrementBtn = document.getElementById("decrementBtn");
         const incrementBtn = document.getElementById("incrementBtn");
-        const addToCartBtn = document.getElementById("addToCartBtn");
 
         // ปุ่มลดจำนวน
         decrementBtn.addEventListener("click", function () {
@@ -175,35 +176,17 @@
 </script>
 
 <script>
+    function sendOrderItem() {
+        // ดึงค่าจาก input และอื่น ๆ
+        var p_id = <?= $product_id ?>;
+        var quantity = $("#quantityInput").val();
 
-addToCartBtn.addEventListener("click", function () {
-    var productId = <?= $product_id; ?>;
-    var quantityInput = parseInt(document.getElementById("quantityInput").value);
-    var quantity = isNaN(quantityInput) ? 0 : quantityInput;
-
-    // เก็บข้อมูลใน sessionStorage ในรูปแบบ Object
-    var cartData = JSON.parse(sessionStorage.getItem('cart')) || []; // ดึงข้อมูลที่มีอยู่, หรือสร้าง Object ใหม่ถ้าไม่มี
-    
-    if (cartData[productId]) {
-        // ถ้าสินค้ามีอยู่ในตะกร้าแล้ว
-        cartData[productId].quantity += quantity;
-    } else {
-        // ถ้าสินค้ายังไม่มีในตะกร้า
-        cartData[productId] = {
-            productId: productId,
-            quantity: quantity
-            // สามารถเพิ่มข้อมูลเพิ่มเติมที่นี่ได้ตามที่ต้องการ
-        };
+        // ส่งข้อมูลไปที่หน้า order.php โดยใช้เมธอด GET
+        var url = "order.php?p_id=" + p_id + "&quantity=" + quantity; // แก้ไข URL ตามที่ต้องการ
+        window.location.href = url;
     }
-
-    sessionStorage.setItem('cart', JSON.stringify(cartData));
-
-    // แสดงข้อมูลใน sessionStorage ใน Console
-    // console.log(sessionStorage);
-});
-
-
 </script>
+
 </body>
 
 </html>

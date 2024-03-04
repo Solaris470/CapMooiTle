@@ -56,8 +56,8 @@
                         </li>
                     </ul>
                     <div class="btn-auth">
-                        <a href="auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
-                        <a href="auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
+                        <a href="../auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
+                        <a href="../auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
                     </div>
                 </div>
             </div>

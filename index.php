@@ -1,3 +1,10 @@
+<?php
+session_start();
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: auth/login.php");
+//     exit();
+// }
+?>
 <!doctype html>
 <html lang="en">
 
@@ -43,7 +50,8 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="pages\about-pork.php">เกี่ยวกับแคบหมู</a></li>
-                                <li><a class="dropdown-item" href="pages\about-brand.php">เกี่ยวกับแคบหมูไอเติ้ล</a></li>
+                                <li><a class="dropdown-item" href="pages\about-brand.php">เกี่ยวกับแคบหมูไอเติ้ล</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -53,10 +61,21 @@
                             <a class="nav-link" href="pages\contact.php">ติดต่อเรา</a>
                         </li>
                     </ul>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <div class="nav-profile d-flex align-item-center">
+                        <a href="" class="btn">
+                            <?= $_SESSION['user_name'] ?>
+                        </a>
+                        <a href="auth/logout.php" class="btn btn-danger">ออก</a>
+                    </div>
+                    <?php else: ?>
                     <div class="btn-auth">
                         <a href="auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
                         <a href="auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
                     </div>
+                    <?php endif; ?>
+
+
                 </div>
             </div>
         </nav>
@@ -161,9 +180,9 @@
 
     </main>
     <footer class="container">
-            <p class="float-end"><a href="#">Back to top</a></p>
-            <p>&copy; 2017–2021 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-        </footer>
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>&copy; 2017–2021 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">

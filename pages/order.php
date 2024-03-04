@@ -1,3 +1,15 @@
+<?php
+ include '../condb.php';
+
+ if (isset($_GET['p_id'], $_GET['quantity'])) {
+    $p_id = mysqli_real_escape_string($conn, $_GET['p_id']);
+    $p_quantity = mysqli_real_escape_string($conn, $_GET['quantity']);
+
+    // Store the values in the session
+    $_SESSION['p_id'] = $p_id;
+    $_SESSION['p_quantity'] = $p_quantity;
+ }
+?>
 <!doctype html>
 <html lang="en">
 
@@ -15,7 +27,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-light">
+        <nav class="navbar navbar-expand-xl bg-light">
             <div class="container">
                 <a class="navbar-brand" href="../index.php">
                     <img src="../img/logo.png" class="img-fluid" width="100">
@@ -56,8 +68,8 @@
                         </li>
                     </ul>
                     <div class="btn-auth">
-                        <a href="auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
-                        <a href="auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
+                        <a href="../auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
+                        <a href="../auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
                     </div>
                 </div>
             </div>
@@ -65,44 +77,60 @@
     </header>
     <main class="p-5 container">
         <div class="row">
-            <div class="col-md-6 h-100">
+            <div class="col-xl-8 h-100">
                 <h2>รายการสินค้า</h2>
                 <div class="cart-items">
+                    <?php if (isset($_SESSION['p_id'])) { ?>
                     <?php
+    $p_id = $_SESSION['p_id'];
+    $p_quantity = $_SESSION['p_quantity'];
 
-        // ดึงข้อมูลจาก Session
-        $cartData = isset($_SESSION['cart']) ? json_decode($_SESSION['cart'], true) : [];
+    $sql = "SELECT * FROM products WHERE product_id = $p_id";
+    $result = $conn->query($sql);
 
-        if (!empty($cartData)) {
-            foreach ($cartData as $item) {
-                $productId = $item['productId'];
-                $quantity = $item['quantity'];
+    if ($result) {
+        if ($result->num_rows > 0) {
+    ?>
+                    <table class="table text-center align-items-center">
+                        <thead>
+                            <tr>
+                                <th>สินค้า</th>
+                                <th>ราคาต่อชิ้น</th>
+                                <th>จำนวน</th>
+                                <th>ราคารวม</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $result->fetch_assoc()) { ?>
+                            <tr>
+                                <td class="cart-product d-flex align-items-center">
+                                    <div class="cart-img" style="max-width: 100px; max-height: 100px;">
+                                        <img src="<?= $row['product_image'] ?>" alt="<?= $row['product_name'] ?>"
+                                            class="w-100 h-auto">
+                                    </div>
+                                    <div class="cart-product-name">
+                                        <p><?= $row['product_name'] ?></p>
+                                    </div>
+                                </td>
+                                <td><?= $row['product_price'] ?></td>
+                                <td><?= $p_quantity ?></td>
+                                <td><?= ($p_quantity * $row['product_price']) ?></td>
+                                <td>ลบ</td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                    <?php } 
+                     } 
+                    } else { 
+                    echo 'ไม่มีสินค้าในตะกร้า';
+                    } ?>
 
-                // ทำการ Query ข้อมูลสินค้าจากฐานข้อมูลโดยใช้ $productId
-                // คำสั่ง SQL และการ Query ข้อมูลจะขึ้นอยู่กับโครงสร้างฐานข้อมูลของคุณ
-                // คำสั่ง SQL เหล่านี้เป็นตัวอย่างเท่านั้น
-                $sql = "SELECT * FROM products WHERE product_id = $productId";
-                $result = $conn->query($sql);
-
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    // แสดงข้อมูลสินค้า
-                    echo '<div class="cart-item">';
-                    echo '<img src="' . $row['product_image'] . '" alt="' . $row['product_name'] . '" class="w-25 h-25">';
-                    echo '<p>' . $row['product_name'] . '</p>';
-                    echo '<p>จำนวน: ' . $quantity . '</p>';
-                    echo '<p>ราคาต่อชิ้น: ' . $row['product_price'] . ' บาท</p>';
-                    echo '<p>ราคารวม: ' . ($quantity * $row['product_price']) . ' บาท</p>';
-                    echo '</div>';
-                }
-            }
-        } else {
-            echo '<p>ไม่มีสินค้าในตะกร้า</p>';
-        }
-        ?>
                 </div>
+
             </div>
-            <div class="col-md-6">
+            <div class="col-xl-4">
                 <form action="process_order.php" method="post">
                     <h3>ที่อยู่ในการจัดส่ง</h3>
                     <div class="row mb-3">
@@ -118,18 +146,18 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <select class="form-select" id="province" name="province" required>
-                                <option value="" selected disabled>เลือกจังหวัด</option>
+                                <option value="" selected disabled>จังหวัด</option>
                             </select>
                         </div>
 
                         <div class="col-md-4">
                             <select class="form-select" id="district" name="district" required>
-                                <option value="" selected disabled>เลือกอำเภอ</option>
+                                <option value="" selected disabled>อำเภอ</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <select class="form-select" id="sub_district" name="sub_district" required>
-                                <option value="" selected disabled>เลือกตำบล</option>
+                                <option value="" selected disabled>ตำบล</option>
                             </select>
                         </div>
                     </div>
@@ -144,7 +172,6 @@
                     <button type="submit" class="btn btn-primary">ยืนยันคำสั่งซื้อ</button>
 
                 </form>
-                <button onclick="clearsesstion()">sesstion clear</button>
             </div>
         </div>
 
@@ -162,13 +189,11 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         // ดึงข้อมูลจังหวัดเมื่อหน้าเว็บโหลด
         getProvinces();
-        getDataFromDatabase();
 
         // เมื่อเปลี่ยนแปลงจังหวัด
         document.getElementById("province").addEventListener("change", function() {
@@ -235,38 +260,6 @@
                     subDistrictSelect.appendChild(option);
                 });
             });
-    }
-
-    function getDataFromDatabase() {
-    // ดึงค่า productId จาก sessionStorage
-    var productId = sessionStorage.getItem('productId');
-
-    // สร้าง XMLHttpRequest object
-    var xhr = new XMLHttpRequest();
-
-    // กำหนด callback function ที่จะทำงานเมื่อข้อมูลถูกโหลด
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // แปลงข้อมูล JSON ที่ได้มาเป็น object
-            var data = JSON.parse(xhr.responseText);
-
-            // ทำอะไรกับข้อมูลที่ได้ เช่น แสดงผลใน console
-            console.log(data);
-
-            // นำข้อมูลไปใช้ต่อตามต้องการ
-            // เช่นแสดงข้อมูลใน HTML, ปรับแต่ง UI, ฯลฯ
-        }
-    };
-
-    // กำหนดว่าจะใช้ method GET และระบุ URL ของไฟล์ PHP
-    xhr.open("GET", "get_data.php?productId=" + productId, true);
-
-    // ส่ง request
-    xhr.send();
-}
-
-    function clearsesstion() {
-        sessionStorage.clear();
     }
     </script>
 </body>

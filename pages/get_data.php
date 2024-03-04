@@ -1,5 +1,7 @@
 <?php
 include("../condb.php");
+try {
+    // Your JSON parsing code here
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['action']) && $_GET['action'] == 'getProvinces') {
@@ -92,5 +94,8 @@ $data = getDataFromDatabase($productId);
 // แสดงผลลัพธ์เป็น JSON
 header('Content-Type: application/json');
 echo json_encode($data);
+} catch (error) {
+    console.error("JSON parsing error:", error);
+}
 
 ?>

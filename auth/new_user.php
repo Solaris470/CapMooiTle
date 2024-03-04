@@ -1,0 +1,32 @@
+<?php
+include ('../condb.php');
+
+$c_name = $_POST['c_name'];
+$c_tel = $_POST['c_tel'];
+$c_email = $_POST['c_mail'];
+$c_user = $_POST['c_user'];
+$c_password = $_POST['c_password'];
+$hashed_password = password_hash($c_password, PASSWORD_DEFAULT);
+
+// $checkQuery = "SELECT * FROM users WHERE c_email = '$c_email' OR c_username = '$c_user'";
+// $result = $conn->$checkQuery;
+// $row = $result->fetch_assoc();
+
+if ($row['count'] > 0) {
+    $error_message = "อีเมลหรือชื่อผู้ใช้ซ้ำกับในระบบ";
+    header('Location: regis.php?error=' . urlencode($error_message));
+    exit();
+} else {
+    // No duplicate found, proceed with the insertion
+    $sql = "INSERT INTO users (c_name, c_tel, c_email,c_username, c_password) VALUES ('$c_name', '$c_tel', '$c_email', '$c_user', '$hashed_password')";
+
+    if ($conn->query($sql)) {
+        header('Location: /CapMooiTle');
+    } else {
+        $error_message = "เกิดข้อผิดพลาดกรุณาติดต่อผู้ดูแลระบบ";
+        header('Location: regis.php?error=' . urlencode($error_message));
+        exit();
+    }
+}
+$conn->close();
+?>
