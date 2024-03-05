@@ -5,10 +5,17 @@
     $p_id = mysqli_real_escape_string($conn, $_GET['p_id']);
     $p_quantity = mysqli_real_escape_string($conn, $_GET['quantity']);
 
-    // Store the values in the session
-    $_SESSION['p_id'] = $p_id;
-    $_SESSION['p_quantity'] = $p_quantity;
- }
+    // Check if the product ID already exists in the session
+    if (isset($_SESSION['p_id'][$p_id])) {
+        // Product ID already exists, update the quantity
+        $_SESSION['p_quantity'][$p_id] += $p_quantity;
+    } else {
+        // Product ID doesn't exist, add a new record
+        $_SESSION['p_id'][$p_id] = $p_id;
+        $_SESSION['p_quantity'][$p_id] = $p_quantity;
+    }
+}
+// var_dump($_SESSION['p_id'],$_SESSION['p_quantity']);
 ?>
 <!doctype html>
 <html lang="en">
@@ -23,6 +30,7 @@
     <?php include('../template/header.php')?>
     <link rel="stylesheet" href="../css/style.css">
     <!-- <link rel="stylesheet" href="css/style.css"> -->
+
 </head>
 
 <body>
@@ -77,19 +85,26 @@
     </header>
     <main class="p-5 container">
         <div class="row">
-            <div class="col-xl-8 h-100">
-                <h2>รายการสินค้า</h2>
+            <div class="col-xl-7 h-100">
+                <div class="cart-list d-flex align-items-center mb-3">
+                    <h2>รายการสินค้า</h2>
+                    <?php if(isset($_GET['alert_message'])): $alert_message=$_GET['alert_message']?>
+                    <div class="alert alert-info alert-dismissible fade show ms-2" role="alert">
+                        <?= $alert_message?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php endif;?>
+                </div>
                 <div class="cart-items">
-                    <?php if (isset($_SESSION['p_id'])) { ?>
-                    <?php
-    $p_id = $_SESSION['p_id'];
-    $p_quantity = $_SESSION['p_quantity'];
+                    <?php 
+    if (isset($_SESSION['p_id'])) { 
+        $p_id = $_SESSION['p_id'];
+        $p_quantity = $_SESSION['p_quantity'];
 
-    $sql = "SELECT * FROM products WHERE product_id = $p_id";
-    $result = $conn->query($sql);
+        $sql = "SELECT * FROM products WHERE product_id IN (" . implode(',', array_keys($p_id)) . ")";
+        $result = $conn->query($sql);
 
-    if ($result) {
-        if ($result->num_rows > 0) {
+        if ($result && $result->num_rows > 0) {
     ?>
                     <table class="table text-center align-items-center">
                         <thead>
@@ -102,37 +117,47 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($row = $result->fetch_assoc()) { ?>
-                            <tr>
+                            <?php 
+                while ($row = $result->fetch_assoc()) { 
+                    $productId = $row['product_id'];
+                    ?>
+                            <tr class="align-items-center">
                                 <td class="cart-product d-flex align-items-center">
                                     <div class="cart-img" style="max-width: 100px; max-height: 100px;">
                                         <img src="<?= $row['product_image'] ?>" alt="<?= $row['product_name'] ?>"
                                             class="w-100 h-auto">
                                     </div>
-                                    <div class="cart-product-name">
+                                    <div class="cart-product-name ms-1">
                                         <p><?= $row['product_name'] ?></p>
                                     </div>
                                 </td>
                                 <td><?= $row['product_price'] ?></td>
-                                <td><?= $p_quantity ?></td>
-                                <td><?= ($p_quantity * $row['product_price']) ?></td>
-                                <td>ลบ</td>
+                                <td>
+                                    <!-- <button class="decrease-btn" data-product-id="<?= $productId ?>">-</button> -->
+                                    <span class="quantity"><?= $p_quantity[$productId] ?></span>
+                                    <!-- <button class="increase-btn" data-product-id="<?= $productId ?>">+</button> -->
+                                </td>
+                                <td><?= ($p_quantity[$productId] * $row['product_price']) ?></td>
+                                <td><a href="action.php?action=delete&p_id=<?= $row['product_id'] ?>">ลบ</a></td>
                             </tr>
                             <?php } ?>
                         </tbody>
                     </table>
-                    <?php } 
-                     } 
-                    } else { 
-                    echo 'ไม่มีสินค้าในตะกร้า';
-                    } ?>
-
+                    <?php 
+        } else { 
+            echo 'ไม่มีสินค้าในตะกร้า';
+        }
+    } else { 
+        echo 'ไม่มีสินค้าในตะกร้า';
+    }
+    ?>
                 </div>
 
+
             </div>
-            <div class="col-xl-4">
+            <div class="col-xl-5">
                 <form action="process_order.php" method="post">
-                    <h3>ที่อยู่ในการจัดส่ง</h3>
+                    <h3 class="mb-3">ที่อยู่ในการจัดส่ง</h3>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <input type="text" class="form-control" id="name" name="name" placeholder="ชื่อ-นามสกุล"
@@ -262,6 +287,45 @@
             });
     }
     </script>
+
+    <!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var increaseButtons = document.querySelectorAll('.increase-btn');
+        var decreaseButtons = document.querySelectorAll('.decrease-btn');
+
+        increaseButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var productId = this.getAttribute('data-product-id');
+                updateQuantity(productId, 1); // เพิ่มจำนวนสินค้า
+            });
+        });
+
+        decreaseButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var productId = this.getAttribute('data-product-id');
+                updateQuantity(productId, -1); // ลดจำนวนสินค้า
+            });
+        });
+
+        function updateQuantity(productId, amount) {
+            // ตรวจสอบว่า productId มีอยู่ใน $_SESSION หรือไม่
+            if (typeof p_quantity[productId] !== 'undefined') {
+                // ปรับปรุงจำนวนสินค้า
+                p_quantity[productId] += amount;
+
+                // แสดงผลลัพธ์ใน HTML
+                var quantityElement = document.querySelector('.quantity[data-product-id="' + productId + '"]');
+                if (quantityElement) {
+                    quantityElement.textContent = p_quantity[productId];
+                }
+
+                // อัปเดต $_SESSION หรือส่งข้อมูลไปยังไฟล์ PHP เพื่ออัปเดต $_SESSION
+                // ตรวจสอบว่าต้องการอัปเดต $_SESSION ทันทีหรือไม่
+            }
+        }
+    });
+    </script> -->
+
 </body>
 
 </html>

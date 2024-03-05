@@ -1,7 +1,5 @@
 <?php
 include("../condb.php");
-try {
-    // Your JSON parsing code here
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['action']) && $_GET['action'] == 'getProvinces') {
@@ -27,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 function getProvinces() {
     global $conn;
-    $sql = "SELECT * FROM provinces";
+    $sql = "SELECT code,name_th FROM provinces";
     $result = $conn->query($sql);
 
     $provinces = array();
@@ -41,7 +39,7 @@ function getProvinces() {
 
 function getDistricts($province_id) {
     global $conn;
-    $sql = "SELECT * FROM district WHERE province_code = $province_id";
+    $sql = "SELECT code,name_th FROM district WHERE province_code = $province_id";
     $result = $conn->query($sql);
     $districts = array();
 
@@ -54,7 +52,7 @@ function getDistricts($province_id) {
 
 function getSubDistricts($district_id) {
     global $conn;
-    $sql = "SELECT * FROM subdistrict WHERE district_code = $district_id";
+    $sql = "SELECT code , name_th FROM subdistrict WHERE district_code = $district_id";
     $result = $conn->query($sql);
 
     $sub_districts = array();
@@ -66,36 +64,8 @@ function getSubDistricts($district_id) {
     return $sub_districts;
 }
 
-function getDataFromDatabase($productId) {
-    $conn = connectToDatabase();
-
-    $productId = $conn->real_escape_string($productId);
-
-    $sql = "SELECT * FROM products WHERE product_id = '$productId'";
-    $result = $conn->query($sql);
-
-    $data = array();
-
-    if ($result->num_rows > 0) {
-        $data = $result->fetch_assoc();
-    }
-
-    $conn->close();
-
-    return $data;
-}
-
-// รับค่า productId จากพารามิเตอร์
-$productId = $_GET['productId'];
-
-// เรียกใช้ฟังก์ชั่นเพื่อดึงข้อมูล
-$data = getDataFromDatabase($productId);
-
-// แสดงผลลัพธ์เป็น JSON
-header('Content-Type: application/json');
-echo json_encode($data);
-} catch (error) {
-    console.error("JSON parsing error:", error);
-}
+// // แสดงผลลัพธ์เป็น JSON
+// header('Content-Type: application/json');
+// echo json_encode($data);
 
 ?>
