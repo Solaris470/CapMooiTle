@@ -21,6 +21,13 @@
     position: relative;
     padding-left: 38px;
  }
+ .content{
+    display: grid;
+    grid-template-columns: 600px 1fr;
+ }
+ .content-right{
+    text-align: center;
+    }
 </style>
 <body>
     <header>
@@ -74,14 +81,23 @@
     </header>
     <main>
     <div class="container">
-        <div>
+        <div class="content pf-20">
+            <div class="content-left">
             <h1>ที่อยู่ของวิทยาเขต</h1>
-        </div>
-        <div class="pf-20">
             <p style="margin-left: 70px;">58 ถนนวิภาวดีรังสิต แขวงรัชดาภิเษก เขตดินแดง กรุงเทพมหานคร 10400<br>
             สนใจรายละเอียดสามารถสอบถามได้ที่ 026922360-4<br>
             02277-3660 , 02277-3661 , 02277-3694 , 02277-2985 แฟกซ์ 02277-3693</p>
-        </div>
+            <h1>อีกช่องทางการติดต่อ</h1>
+                <ul>
+                    <li class="lb"><i class="bi bi-envelope"></i> : patipat.cha@rmutto.ac.th</li>
+                    <li class="lb"><i class="bi bi-envelope"></i> : atit.son@rmutto.ac.th</li>
+                    <li class="lb"><i class="bi bi-envelope"></i> : wachirawit.cho@rmutto.ac.th</li>
+                </ul>
+            </div>
+            <div class="content-right">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.0129240290644!2d100.55410937519335!3d13.778094086616544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29e9e0e7323af%3A0x8ed6fabd07a8b603!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4LmA4LiX4LiE4LmC4LiZ4LmC4Lil4Lii4Li14Lij4Liy4LiK4Lih4LiH4LiE4Lil4LiV4Liw4Lin4Lix4LiZ4Lit4Lit4LiBIOC4p-C4tOC4l-C4ouC4suC5gOC4guC4leC4iOC4seC4geC4o-C4nuC4h-C4qeC4oOC4ueC4p-C4meC4suC4o-C4lg!5e0!3m2!1sth!2sth!4v1709729442442!5m2!1sth!2sth" width="400" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div> 
+        </div>  
         <hr>
         <div>
             <h1>รถประจำทางที่ผ่านวิทยาเขต</h1>
@@ -122,7 +138,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
