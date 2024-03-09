@@ -1,6 +1,11 @@
 <?php
  include '../condb.php';
 
+ if (!isset($_SESSION['user_id'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
  if (isset($_GET['p_id'], $_GET['quantity'])) {
     $p_id = mysqli_real_escape_string($conn, $_GET['p_id']);
     $p_quantity = mysqli_real_escape_string($conn, $_GET['quantity']);
@@ -75,10 +80,19 @@
                             <a class="nav-link" href="contact.php">ติดต่อเรา</a>
                         </li>
                     </ul>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <div class="nav-profile d-flex align-item-center">
+                        <a href="" class="btn">
+                            <?= $_SESSION['user_name'] ?>
+                        </a>
+                        <a href="../auth/logout.php" class="btn btn-danger">ออก</a>
+                    </div>
+                    <?php else: ?>
                     <div class="btn-auth">
                         <a href="../auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
                         <a href="../auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
@@ -95,11 +109,13 @@
                     </div>
                     <?php endif;?>
                 </div>
+                <form action="action.php" method="post">
                 <div class="cart-items">
                     <?php 
     if (isset($_SESSION['p_id'])) { 
         $p_id = $_SESSION['p_id'];
         $p_quantity = $_SESSION['p_quantity'];
+        $total_price = 0;
 
         $sql = "SELECT * FROM products WHERE product_id IN (" . implode(',', array_keys($p_id)) . ")";
         $result = $conn->query($sql);
@@ -140,34 +156,47 @@
                                 <td><?= ($p_quantity[$productId] * $row['product_price']) ?></td>
                                 <td><a href="action.php?action=delete&p_id=<?= $row['product_id'] ?>">ลบ</a></td>
                             </tr>
-                            <?php } ?>
+                            <!-- quantity -->
+                            <input type="hidden" name="quantity" value="<?= $p_quantity[$productId] ?>">
+                            <?php 
+                        $total_price += ($p_quantity[$productId] * $row['product_price']);
+                        } ?>
                         </tbody>
-                    </table>
+                    
                     <?php 
+        
         } else { 
             echo 'ไม่มีสินค้าในตะกร้า';
         }
+        echo '<tfoot >
+        <tr class="table table-bordered">
+            <td colspan="3">รวมทั้งหมด</td>
+            <td colspan="">' .$total_price. '</td>
+            <td></td>
+        </tr>
+    </tfoot>';
     } else { 
         echo 'ไม่มีสินค้าในตะกร้า';
     }
     ?>
+    </table>
                 </div>
 
 
             </div>
             <div class="col-xl-5">
-                <form action="process_order.php" method="post">
+                
                     <h3 class="mb-3">ที่อยู่ในการจัดส่ง</h3>
-                    <div class="row mb-3">
+                    <!-- <div class="row mb-3">
                         <div class="col-md-6">
                             <input type="text" class="form-control" id="name" name="name" placeholder="ชื่อ-นามสกุล"
                                 required>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="เบอร์โทร"
+                            <input type="text" class="form-control" id="tel" name="tel" placeholder="เบอร์โทร"
                                 required>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <select class="form-select" id="province" name="province" required>
@@ -188,7 +217,7 @@
                     </div>
                     <div class="mb-3">
                         <div class="mb-3">
-                            <textarea class="form-control" name="" id="" rows="3"
+                            <textarea class="form-control" name="address" id="" rows="3"
                                 placeholder="บ้านเลขที่, ซอย,หมู่ ,ถนน ,ตำบล/แขวง"></textarea>
                         </div>
 
