@@ -75,8 +75,8 @@ session_start();
             </div>
         </nav>
     </header>
-    <main>
-
+    <main class="container">
+            <h1>Comming soon...</h1>
     </main>
     <footer class="container">
         <p class="float-end"><a href="#">Back to top</a></p>
