@@ -24,6 +24,7 @@
  .content{
     display: grid;
     grid-template-columns: 600px 1fr;
+    margin-top: 10px;
  }
  .content-right{
     text-align: center;
@@ -83,7 +84,7 @@
     <div class="container">
         <div class="content pf-20">
             <div class="content-left">
-            <h1>ที่อยู่ของวิทยาเขต</h1>
+            <h1 style="margin-top:15px  ;">ที่อยู่ของวิทยาเขต</h1>
             <p style="margin-left: 70px;">58 ถนนวิภาวดีรังสิต แขวงรัชดาภิเษก เขตดินแดง กรุงเทพมหานคร 10400<br>
             สนใจรายละเอียดสามารถสอบถามได้ที่ 026922360-4<br>
             02277-3660 , 02277-3661 , 02277-3694 , 02277-2985 แฟกซ์ 02277-3693</p>
