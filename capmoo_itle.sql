@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2024 at 06:04 PM
+-- Generation Time: Mar 09, 2024 at 09:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -1003,8 +1003,49 @@ CREATE TABLE `orders` (
   `user_id` int(11) DEFAULT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `total_amount` decimal(10,2) DEFAULT NULL,
+  `address` text NOT NULL,
   `status` enum('Pending','Processing','Shipped','Delivered') DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `user_id`, `order_date`, `total_amount`, `address`, `status`) VALUES
+(1, 7, '2024-03-08 21:28:28', NULL, '11 1101 110102 384 หมู่ 4', 'Pending'),
+(2, 7, '2024-03-09 06:37:27', NULL, ' สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(3, 7, '2024-03-09 06:37:50', NULL, ' สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(4, 7, '2024-03-09 06:38:26', NULL, ' สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(5, 7, '2024-03-09 06:39:08', NULL, ' สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(6, 7, '2024-03-09 06:39:17', NULL, ' สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(7, 7, '2024-03-09 06:39:56', NULL, ' สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(8, 7, '2024-03-09 06:40:16', NULL, ' สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(9, 7, '2024-03-09 06:41:02', NULL, ' สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(10, 7, '2024-03-09 06:42:00', NULL, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตดุสิต วชิรพยาบาล 10300', 'Pending'),
+(11, 7, '2024-03-09 06:42:18', NULL, ' กรุงเทพมหานคร เขตดุสิต สวนจิตรลดา 10300', 'Pending'),
+(12, 7, '2024-03-09 06:44:05', NULL, ' กรุงเทพมหานคร เขตพระนคร วังบูรพาภิรมย์ 10200', 'Pending'),
+(13, 7, '2024-03-09 06:45:22', NULL, '384\r\nสำโรงเหนือ สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(14, 7, '2024-03-09 06:46:05', NULL, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตดุสิต วชิรพยาบาล 10300', 'Pending'),
+(15, 7, '2024-03-09 06:46:29', NULL, '384\r\nสำโรงเหนือ สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(16, 7, '2024-03-09 06:48:59', NULL, '384\r\nสำโรงเหนือ สมุทรปราการ เมืองสมุทรปราการ ปากน้ำ 10270', 'Pending'),
+(17, 7, '2024-03-09 06:49:16', NULL, '384\r\nสำโรงเหนือ สมุทรปราการ บางบ่อ บางบ่อ 10560', 'Pending'),
+(18, 7, '2024-03-09 06:49:43', NULL, '384\r\nสำโรงเหนือ สมุทรปราการ เมืองสมุทรปราการ ปากน้ำ 10270', 'Pending'),
+(19, 7, '2024-03-09 06:51:01', NULL, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตดุสิต สวนจิตรลดา 10300', 'Pending'),
+(20, 7, '2024-03-09 07:06:47', NULL, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตพระนคร พระบรมมหาราชวัง 10200', 'Pending'),
+(21, 7, '2024-03-09 07:07:10', NULL, '384\r\nสำโรงเหนือ สมุทรปราการ บางบ่อ บ้านระกาศ 10560', 'Pending'),
+(22, 7, '2024-03-09 07:13:04', 160.00, '384\r\nสำโรงเหนือ สมุทรปราการ เมืองสมุทรปราการ สำโรงเหนือ 10270', 'Pending'),
+(23, 7, '2024-03-09 07:34:32', 160.00, '384\r\nสำโรงเหนือ สมุทรปราการ บางบ่อ บางบ่อ 10560', 'Pending'),
+(24, 7, '2024-03-09 07:37:21', 160.00, ' สมุทรปราการ บางพลี บางปลา 10540', 'Pending'),
+(25, 7, '2024-03-09 07:39:59', NULL, '384\r\nสำโรงเหนือ สมุทรปราการ บางบ่อ บางพลีน้อย 10560', 'Pending'),
+(26, 7, '2024-03-09 07:40:28', NULL, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตดุสิต สวนจิตรลดา 10300', 'Pending'),
+(27, 7, '2024-03-09 07:40:43', NULL, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตดุสิต สวนจิตรลดา 10300', 'Pending'),
+(28, 7, '2024-03-09 07:41:05', NULL, '384\r\nสำโรงเหนือ สมุทรปราการ บางบ่อ บ้านระกาศ 10560', 'Pending'),
+(29, 7, '2024-03-09 07:46:23', 360.00, '384\r\nสำโรงเหนือ สมุทรปราการ บางบ่อ บ้านระกาศ 10560', 'Pending'),
+(30, 7, '2024-03-09 07:47:37', 160.00, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตหนองจอก คลองสิบ 10530', 'Pending'),
+(31, 7, '2024-03-09 07:48:06', 160.00, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตดุสิต สวนจิตรลดา 10300', 'Pending'),
+(32, 7, '2024-03-09 07:48:37', 400.00, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตดุสิต วชิรพยาบาล 10300', 'Pending'),
+(33, 7, '2024-03-09 07:49:23', 320.00, '384\r\nสำโรงเหนือ กรุงเทพมหานคร เขตดุสิต วชิรพยาบาล 10300', 'Pending'),
+(34, 7, '2024-03-09 07:50:40', 160.00, '384\r\nสำโรงเหนือ สมุทรปราการ เมืองสมุทรปราการ บางเมือง 10270', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -1017,8 +1058,47 @@ CREATE TABLE `order_items` (
   `order_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `subtotal` decimal(10,2) DEFAULT NULL
+  `price` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
+(1, 12, 1, 1, 40.00),
+(2, 12, 1, 1, 40.00),
+(3, 13, 1, 1, 40.00),
+(4, 14, 1, 1, 40.00),
+(5, 14, 3, 3, 120.00),
+(6, 15, 1, 1, 40.00),
+(7, 15, 2, 2, 80.00),
+(8, 16, 1, 1, 40.00),
+(9, 16, 3, 3, 120.00),
+(10, 17, 1, 1, 40.00),
+(11, 17, 3, 3, 120.00),
+(12, 18, 1, 1, 40.00),
+(13, 18, 3, 3, 120.00),
+(14, 19, 1, 1, 40.00),
+(15, 19, 3, 3, 120.00),
+(16, 20, 1, 1, 40.00),
+(17, 21, 1, 4, 40.00),
+(18, 21, 3, 4, 120.00),
+(19, 22, 1, 2, 40.00),
+(20, 22, 3, 2, 120.00),
+(21, 23, 1, 4, 40.00),
+(22, 23, 3, 4, 120.00),
+(23, 24, 1, 16, 40.00),
+(24, 24, 3, 16, 120.00),
+(25, 29, 1, 9, 360.00),
+(26, 30, 1, 4, 160.00),
+(27, 31, 1, 4, 160.00),
+(28, 32, 1, 5, 200.00),
+(29, 32, 3, 5, 200.00),
+(30, 33, 1, 4, 160.00),
+(31, 33, 2, 4, 160.00),
+(32, 34, 1, 4, 160.00),
+(33, 34, 2, 4, 160.00);
 
 -- --------------------------------------------------------
 
@@ -1157,14 +1237,6 @@ CREATE TABLE `reviews` (
   `rating` int(11) DEFAULT NULL,
   `comment` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `reviews`
---
-
-INSERT INTO `reviews` (`review_id`, `product_id`, `user_id`, `rating`, `comment`) VALUES
-(1, 1, 1, 3, NULL),
-(2, 1, 2, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -8651,20 +8723,20 @@ INSERT INTO `subdistrict` (`code`, `zip_code`, `name_th`, `name_en`, `district_c
 --
 
 CREATE TABLE `users` (
-  `id` int(10) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `age` varchar(5) NOT NULL,
-  `tel` varchar(15) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `c_id` int(10) NOT NULL,
+  `c_name` varchar(100) NOT NULL,
+  `c_tel` varchar(15) NOT NULL,
+  `c_email` varchar(255) NOT NULL,
+  `c_username` varchar(255) NOT NULL,
+  `c_password` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `age`, `tel`, `email`) VALUES
-(1, 'atit', '21', '0958852764', 'ifnet470@gmail.com'),
-(2, 'wachirawit', '20', '0912345678', 'wat.cho@rmutto.ac.th');
+INSERT INTO `users` (`c_id`, `c_name`, `c_tel`, `c_email`, `c_username`, `c_password`) VALUES
+(7, 'อธิศ สนธิรักษ์', '0958852764', 'ifnet470@gmail.com', 'atit.son', '$2y$10$P3S0YwanvrQmeTCLQCaE5OVlhX5fDMuEyJJouoHKl.bjyZvhD/H52');
 
 --
 -- Indexes for dumped tables
@@ -8727,7 +8799,8 @@ ALTER TABLE `subdistrict`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`c_id`),
+  ADD UNIQUE KEY `c_email` (`c_email`,`c_username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -8740,6 +8813,18 @@ ALTER TABLE `geographies`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
@@ -8749,13 +8834,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `c_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -8765,7 +8850,7 @@ ALTER TABLE `users`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`c_id`);
 
 --
 -- Constraints for table `order_items`
@@ -8779,7 +8864,7 @@ ALTER TABLE `order_items`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
-  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`c_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,8 +1,11 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Home</title>
+    <title>เกี่ยวกับแคบหมู</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -55,10 +58,19 @@
                             <a class="nav-link" href="contact.php">ติดต่อเรา</a>
                         </li>
                     </ul>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <div class="nav-profile d-flex align-item-center">
+                        <a href="" class="btn">
+                            <?= $_SESSION['user_name'] ?>
+                        </a>
+                        <a href="../auth/logout.php" class="btn btn-danger">ออก</a>
+                    </div>
+                    <?php else: ?>
                     <div class="btn-auth">
                         <a href="../auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
                         <a href="../auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>

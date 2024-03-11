@@ -1,3 +1,6 @@
+<?php
+        include("../condb.php");
+?>
 <!doctype html>
 <html lang="en">
 
@@ -56,10 +59,19 @@
                             <a class="nav-link" href="contact.php">ติดต่อเรา</a>
                         </li>
                     </ul>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <div class="nav-profile d-flex align-item-center">
+                        <a href="" class="btn">
+                            <?= $_SESSION['user_name'] ?>
+                        </a>
+                        <a href="../auth/logout.php" class="btn btn-danger">ออก</a>
+                    </div>
+                    <?php else: ?>
                     <div class="btn-auth">
                         <a href="../auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
                         <a href="../auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
@@ -72,7 +84,6 @@
             <div class="col-md-10 bg-light">
                 <div class="row row-cols-1 row-cols-md-4">
                     <?php
-        include("../condb.php");
         $sql = "SELECT products.product_id,product_price,product_bestsell, products.product_name, COALESCE(AVG(reviews.rating), 0) AS average_rating , product_image
         FROM products
         LEFT JOIN reviews ON products.product_id = reviews.product_id

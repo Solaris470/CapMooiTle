@@ -1,8 +1,11 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Home</title>
+    <title>ติดต่อเรา</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -24,6 +27,7 @@
  .content{
     display: grid;
     grid-template-columns: 600px 1fr;
+    margin-top: 10px;
  }
  .content-right{
     text-align: center;
@@ -71,10 +75,19 @@
                             <a class="nav-link active" href="contact.php">ติดต่อเรา</a>
                         </li>
                     </ul>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <div class="nav-profile d-flex align-item-center">
+                        <a href="" class="btn">
+                            <?= $_SESSION['user_name'] ?>
+                        </a>
+                        <a href="../auth/logout.php" class="btn btn-danger">ออก</a>
+                    </div>
+                    <?php else: ?>
                     <div class="btn-auth">
                         <a href="../auth/login.php" class="btn btn-success">เข้าสู่ระบบ</a>
                         <a href="../auth/regis.php" class="btn btn-primary">สมัครสมาชิก</a>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
@@ -83,7 +96,7 @@
     <div class="container">
         <div class="content pf-20">
             <div class="content-left">
-            <h1>ที่อยู่ของวิทยาเขต</h1>
+            <h1 style="margin-top:15px  ;">ที่อยู่ของวิทยาเขต</h1>
             <p style="margin-left: 70px;">58 ถนนวิภาวดีรังสิต แขวงรัชดาภิเษก เขตดินแดง กรุงเทพมหานคร 10400<br>
             สนใจรายละเอียดสามารถสอบถามได้ที่ 026922360-4<br>
             02277-3660 , 02277-3661 , 02277-3694 , 02277-2985 แฟกซ์ 02277-3693</p>
