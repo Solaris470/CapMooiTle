@@ -87,11 +87,11 @@
             <p style="margin-left: 70px;">58 ถนนวิภาวดีรังสิต แขวงรัชดาภิเษก เขตดินแดง กรุงเทพมหานคร 10400<br>
             สนใจรายละเอียดสามารถสอบถามได้ที่ 026922360-4<br>
             02277-3660 , 02277-3661 , 02277-3694 , 02277-2985 แฟกซ์ 02277-3693</p>
-            <h1>อีกช่องทางการติดต่อ</h1>
+            <h1>ติดต่อผู้พัฒนา</h1>
                 <ul>
-                    <li class="lb"><i class="bi bi-envelope"></i> : patipat.cha@rmutto.ac.th</li>
-                    <li class="lb"><i class="bi bi-envelope"></i> : atit.son@rmutto.ac.th</li>
-                    <li class="lb"><i class="bi bi-envelope"></i> : wachirawit.cho@rmutto.ac.th</li>
+                    <li class="lb"><i class="bi bi-envelope"></i> : <a href="mailto:patipat.cha@rmutto.ac.th">patipat.cha@rmutto.ac.th</a></li>
+                    <li class="lb"><i class="bi bi-envelope"></i> : <a href="mailto:atit.son@rmutto.ac.th">atit.son@rmutto.ac.th</a></li>
+                    <li class="lb"><i class="bi bi-envelope"></i> : <a href="mailto:wachirawit.cho@rmutto.ac.th">wachirawit.cho@rmutto.ac.th</a></li>
                 </ul>
             </div>
             <div class="content-right">
